@@ -208,7 +208,7 @@ insert into producto(
     contenido, subcategoria, categoria
 ) values
 ("p1", "img", "lote", CURDATE(), 10, 10.10, "marca",
-2,"model","tipo","2ml", 1, 1);
+1,"model","tipo","2ml", 1, 1);
 
 select * from producto as p 
 join distribuidor as d on p.distribuidor = d.id 

@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @WebServlet(name = "UserDao", value = "/login")
 public class UsuarioServlet extends HttpServlet {
@@ -26,6 +27,8 @@ public class UsuarioServlet extends HttpServlet {
         String pass  = req.getParameter("pass");
 
         UsuarioDao dao = new UsuarioDao();
+
+        req.getSession().removeAttribute("mensaje");
         Usuario usr = (Usuario) dao.findOne(email, pass);
 
         if(usr.getId()!=0){ //Que si existe un usuario en la BD
@@ -80,6 +83,8 @@ public class UsuarioServlet extends HttpServlet {
                     break;
             }
             req.getSession().setAttribute("operaciones", operaciones);
+        }else{
+            req.getSession().setAttribute("mensaje","El usuario o la contraseña son incorrectos");
         }
 
         resp.sendRedirect("index.jsp");

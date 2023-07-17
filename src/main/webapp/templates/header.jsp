@@ -7,8 +7,11 @@
     <meta name="description" content="Sistema de Zazil">
     <meta name="author" content="Derick Lagunes">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/icon/font/fonts/bootstrap-icons.woff" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/icon/font/fonts/bootstrap-icons.woff2" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/icon/font/bootstrap-icons.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/jquery.dataTables.min.css" />
 </head>
 <body>
 <header>

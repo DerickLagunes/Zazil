@@ -4,7 +4,19 @@
 <main>
     <div class="container-fluid">
         <div class="row">
-            <div class="col">
+            <div class="text-center offset-2 col-8" style="padding-top: 60px">
+                <h2>Administración de productos</h2>
+                <br class="d-md-none">
+                <form method="get" action="Productos">
+                    <input type="hidden" name="operacion" value="nuevo">
+                    <button class="btn btn-lg btn-primary" type="submit"><i class="bi bi-plus-square-fill"></i> Nuevo producto</button>
+                </form>
+                <form method="get" action="Productos">
+                    <input type="hidden" name="operacion" value="reporte">
+                    <button class="btn btn-lg btn-primary" type="submit"><i class="bi bi-file-pdf"></i> Descargar Reporte</button>
+                </form>
+            </div>
+            <div class="offset-2 col-8" style="padding-top: 60px">
                 <table id="tabla" class="table table-striped nowrap" style="width:100%">
                     <thead>
                         <th>Nombre</th>
@@ -43,14 +55,15 @@
     </div>
 </main>
 <script src="${pageContext.request.contextPath}/assets/js/jquery-3.7.0.min.js" ></script>
-<script src="${pageContext.request.contextPath}/assets/js/dataTables.bootstrap5.min.js" ></script>
 <script src="${pageContext.request.contextPath}/assets/js/jquery.dataTables.min.js" ></script>
+<script src="${pageContext.request.contextPath}/assets/js/es-MX.json"></script>
 <script>
-    new DataTable('#tabla', {
-        paging: true,
-        scrollCollapse: true,
-        scrollX: true,
-        scrollY: 300
+    $(document).ready(function() {
+        $('#tabla').DataTable({
+            language: {
+                url: "${pageContext.request.contextPath}/assets/js/es-MX.json"
+            }
+        });
     });
 </script>
 <jsp:include page="templates/footer.jsp" />
