@@ -189,6 +189,14 @@ insert into tipos_envios(tipo) values
 ("Paqueteria"),
 ("Uber");
 
+insert into usuario(
+    nombre, nombre2, apellido, apellido2,
+    sexo, fecha_nacimiento, correo, contra,
+    codigo, rol, ultimo_login)
+values("Derick", "", "Lagunes", "Alva", 1, '1970-07-25',
+       "deeckcorp@gmail.com", sha2("admin",224),
+       sha2("admin",224), 1, CURDATE());
+
 select usuario.*, roles.nombre_rol from usuario join roles on usuario.rol = roles.id;
 
 select * from distribuidor;
