@@ -53,7 +53,15 @@ public class ColoniaDao {
         try {
             PreparedStatement stmt =
                     con.prepareStatement(
-                            "select c.id, m.id, e.id, p.id from colonias as c join municipios as m on c.municipio = m.id join estados as e on m.estado = e.id join paises as p on e.pais = p.id where c.id = ?"
+                            "select c.id, m.id, e.id, p.id " +
+                                    "from colonias as c " +
+                                    "join municipios as m " +
+                                    "on c.municipio = m.id " +
+                                    "join estados as e " +
+                                    "on m.estado = e.id " +
+                                    "join paises as p " +
+                                    "on e.pais = p.id " +
+                                    "where c.id = ?"
                     );
             stmt.setInt(1,id);
             ResultSet res = stmt.executeQuery();

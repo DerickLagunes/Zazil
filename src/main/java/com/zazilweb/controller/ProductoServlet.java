@@ -48,15 +48,19 @@ public class ProductoServlet extends HttpServlet {
         } else if (req.getParameter("operacion").equals("reporte")) {
 
             //Seleccinar una imagen de los assets (logo)
-            FileInputStream archivo = new FileInputStream(req.getSession().getServletContext().getResource("/assets/img/logo.png").getFile());
+            FileInputStream archivo =
+                    new FileInputStream(req.getSession().
+                            getServletContext().
+                            getResource("/assets/img/logo.png").
+                            getFile());
             //Obtener ubicación y bytes del reporte
-            String report = "/WEB-INF/ReporteProductos.jasper";
+            String report = "/WEB-INF/Reporte3B.jasper";
             File file = new File(getServletContext().getRealPath(report));
             InputStream input = new FileInputStream(file);
 
             //Colocar los parametros del reporte
             Map mapa = new HashMap();
-            mapa.put("logo", archivo);
+            mapa.put("Logo", archivo);
 
             //obtener una coneccion a los datos
             Connection con = new MysqlConector().connect();
@@ -64,11 +68,13 @@ public class ProductoServlet extends HttpServlet {
             //Establecer el tipo de respuesta
             resp.setContentType("application/pdf");
             //esto es para forzar la descarga del archivo
-            resp.setHeader("Content-Disposition", "Attachment; filename=reporte.pdf");
+            resp.setHeader("Content-Disposition",
+                    "Attachment; filename=reporte.pdf");
 
             //Generar el reporte
             try {
-                byte[] bytes = JasperRunManager.runReportToPdf(input, mapa, con);
+                byte[] bytes = JasperRunManager.
+                        runReportToPdf(input, mapa, con);
                 OutputStream os = resp.getOutputStream();
                 os.write(bytes);
                 os.flush();
