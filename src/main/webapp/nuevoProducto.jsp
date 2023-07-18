@@ -126,7 +126,9 @@
               <label for="categoria_producto" class="form-label">Categoria<i class="text-danger">*</i></label>
               <select required id="categoria_producto" name="categoria_producto" class="form-select form-select mb-3" aria-describedby="categoria_producto_ayuda">
                 <option selected>Selecciona...</option>
-                <option value=""></option>
+                <c:forEach items="${categorias}" var="c">
+                  <option value="${c.id}">${c.nombre}</option>
+                </c:forEach>
               </select>
               <div id="categoria_producto_ayuda" class="form-text">Selecciona la categoria del nuevo producto o crea una nueva.</div>
             </div>
@@ -136,7 +138,9 @@
               <label for="subcategoria_producto" class="form-label">SubCategoria<i class="text-danger">*</i></label>
               <select required id="subcategoria_producto" name="subcategoria_producto" class="form-select form-select mb-3" aria-describedby="subcategoria_producto_ayuda">
                 <option selected>Selecciona...</option>
-                <option value=""></option>
+                <c:forEach items="${subcategorias}" var="s">
+                  <option value="${s.id}">${s.nombre}</option>
+                </c:forEach>
               </select>
               <div id="subcategoria_producto_ayuda" class="form-text">Selecciona la subcategoria del nuevo producto o crea una nueva.</div>
             </div>

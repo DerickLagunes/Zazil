@@ -1,6 +1,9 @@
 package com.zazilweb.controller;
 
+import com.zazilweb.model.Categoria;
+import com.zazilweb.model.DAO.CategoriaDao;
 import com.zazilweb.model.DAO.DistribuidorDao;
+import com.zazilweb.model.DAO.SubCategoriaDao;
 import com.zazilweb.model.Distribuidor;
 import com.zazilweb.model.Producto;
 import com.zazilweb.model.DAO.ProductoDao;
@@ -34,6 +37,13 @@ public class ProductoServlet extends HttpServlet {
             req.getSession().setAttribute("distribuidores",lista);
 
             //enviar Categorias y Subcategorias
+            CategoriaDao catDao = new CategoriaDao();
+            List<Distribuidor> catLista = catDao.findAll();
+            req.getSession().setAttribute("categorias",catLista);
+
+            SubCategoriaDao subCatDao = new SubCategoriaDao();
+            List<Distribuidor> subcatLista = subCatDao.findAll();
+            req.getSession().setAttribute("subcategorias",subcatLista);
 
         } else if (req.getParameter("operacion").equals("reporte")) {
 
@@ -76,4 +86,8 @@ public class ProductoServlet extends HttpServlet {
         resp.sendRedirect(respuesta);
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //Registrar el producto en la base de datos
+    }
 }

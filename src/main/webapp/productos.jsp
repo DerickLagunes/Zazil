@@ -4,20 +4,27 @@
 <main>
     <div class="container-fluid">
         <div class="row">
-            <div class="text-center offset-2 col-8" style="padding-top: 60px">
+            <div class="text-center offset-md-2 col-md-8" style="padding-top: 60px">
                 <h2>Administración de productos</h2>
                 <br class="d-md-none">
-                <form method="get" action="Productos">
-                    <input type="hidden" name="operacion" value="nuevo">
-                    <button class="btn btn-lg btn-primary" type="submit"><i class="bi bi-plus-square-fill"></i> Nuevo producto</button>
-                </form>
-                <form method="get" action="Productos">
-                    <input type="hidden" name="operacion" value="reporte">
-                    <button class="btn btn-lg btn-primary" type="submit"><i class="bi bi-file-pdf"></i> Descargar Reporte</button>
-                </form>
+                <div class="row">
+                    <div class="offset-md-3 col-md-3">
+                        <form method="get" action="Productos">
+                            <input type="hidden" name="operacion" value="nuevo">
+                            <button class="btn btn-lg btn-primary" type="submit"><i class="bi bi-plus-square-fill"></i> Nuevo producto</button>
+                        </form>
+                        <br class="d-md-none">
+                    </div>
+                    <div class="col-md-3">
+                        <form method="get" action="Productos">
+                            <input type="hidden" name="operacion" value="reporte">
+                            <button class="btn btn-lg btn-primary" type="submit"><i class="bi bi-file-pdf"></i> Descargar Reporte</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="offset-2 col-8" style="padding-top: 60px">
-                <table id="tabla" class="table table-striped nowrap" style="width:100%">
+            <div class="offset-md-2 col-md-8" style="padding-top: 60px">
+                <table id="tabla" class="table table-striped nowrap container-fluid" style="width:100%">
                     <thead>
                         <th>Nombre</th>
                         <th>Marca</th>
