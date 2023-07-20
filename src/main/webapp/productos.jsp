@@ -22,6 +22,14 @@
                             <button class="btn btn-lg btn-primary" type="submit"><i class="bi bi-file-pdf"></i> Descargar Reporte</button>
                         </form>
                     </div>
+                    <div class="offset-md-4 col-md-4">
+                        <c:if test="${not empty mensaje}">
+                            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                <strong><i class="bi bi-info"></i> ${mensaje}</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </c:if>
+                    </div>
                 </div>
             </div>
             <div class="offset-md-2 col-md-8" style="padding-top: 60px">

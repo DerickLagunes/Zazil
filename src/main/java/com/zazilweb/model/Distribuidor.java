@@ -18,6 +18,10 @@ public class Distribuidor implements Serializable {
     public Distribuidor() {
     }
 
+    public Distribuidor(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

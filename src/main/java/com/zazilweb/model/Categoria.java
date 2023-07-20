@@ -8,6 +8,10 @@ public class Categoria implements Serializable {
 
     public Categoria(){}
 
+    public Categoria(int id){
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

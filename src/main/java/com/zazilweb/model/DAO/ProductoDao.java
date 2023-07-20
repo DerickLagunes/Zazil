@@ -128,5 +128,5 @@ public class ProductoDao implements DaoRepository{
     @Override
     public boolean insert(Object object) {
         return false;
-    }
+    }//WIP
 }

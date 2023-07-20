@@ -10,6 +10,10 @@ public class SubCategoria implements Serializable {
 
     public SubCategoria(){}
 
+    public SubCategoria(int id){
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
