@@ -48,7 +48,7 @@
               </div>
 
               <div class="mb-3">
-                <label for="correo2" class="form-label">Otro teléfono (opcional)</label>
+                <label for="correo2" class="form-label">Otro correo (opcional)</label>
                 <input maxlength="20" required="" type="text" class="form-control" id="correo2" name="correo2" aria-describedby="correo2_ayuda">
                 <div id="correo2_ayuda" class="form-text">Escribe aquí otro correo de contacto del nuevo distribuidor.</div>
               </div>

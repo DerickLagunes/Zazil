@@ -64,8 +64,8 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </c:if>
+                    <a class="link-info">¿Has olvidado tu contraseña?</a><br><br>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
-                    <a class="btn btn-lg btn-primary btn-block" href="registro.jsp">Registrarse</a>
                 </form>
             </div>
 </c:if>

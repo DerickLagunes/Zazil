@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<jsp:include page="templates/header.jsp" />
+<jsp:include page="templates/headerSinBarra.jsp" />
 <main>
     <div class="d-flex align-items-center justify-content-center vh-100">
         <div class="text-center row">

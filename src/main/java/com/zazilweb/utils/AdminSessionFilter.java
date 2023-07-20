@@ -12,7 +12,9 @@ import java.io.IOException;
         "/Colonia",
         "/Municipio",
         "/Estado",
-        "/Pais"
+        "/Pais",
+        "/productos.jsp",
+        "/nuevoProducto.jsp"
 }) // This filter will be applied to all URLs
 public class AdminSessionFilter implements Filter {
 
