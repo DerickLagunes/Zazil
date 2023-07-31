@@ -2,7 +2,7 @@ package com.zazilweb.model.DAO;
 
 import com.zazilweb.model.Estado;
 import com.zazilweb.model.Pais;
-import com.zazilweb.utils.MysqlConector;
+import com.zazilweb.utils.DatabaseConnectionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,13 +15,12 @@ public class EstadoDao{
 
     private Connection con;
     private List<Estado> lista;
-    private Estado e;
     private boolean resp;
+    private ResultSet res;
 
     public EstadoDao(){
-        this.con = new MysqlConector().connect();
+        this.con = new DatabaseConnectionManager().connect();
         this.lista = new ArrayList<>();
-        this.e = new Estado();
         this.resp = false;
     }
 
@@ -33,7 +32,7 @@ public class EstadoDao{
                             "select * from estados where pais = ?"
                     );
             stmt.setInt(1,id);
-            ResultSet res = stmt.executeQuery();
+            res = stmt.executeQuery();
             while(res.next()){
                 Estado e = new Estado();
                 e.setId(res.getInt("id"));
@@ -45,10 +44,10 @@ public class EstadoDao{
 
                 lista.add(e);
             }
-            stmt.close();
-            con.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            DatabaseConnectionManager.cerrarTodo(res,con);
         }
         return lista;
     }

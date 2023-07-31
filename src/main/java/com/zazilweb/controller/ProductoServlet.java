@@ -8,7 +8,7 @@ import com.zazilweb.model.Distribuidor;
 import com.zazilweb.model.Producto;
 import com.zazilweb.model.DAO.ProductoDao;
 import com.zazilweb.model.SubCategoria;
-import com.zazilweb.utils.MysqlConector;
+import com.zazilweb.utils.DatabaseConnectionManager;
 import net.sf.jasperreports.engine.JasperRunManager;
 
 import javax.servlet.ServletException;
@@ -72,7 +72,7 @@ public class ProductoServlet extends HttpServlet {
             mapa.put("Logo", archivo);
 
             //obtener una coneccion a los datos
-            Connection con = new MysqlConector().connect();
+            Connection con = new DatabaseConnectionManager().connect();
 
             //Establecer el tipo de respuesta
             resp.setContentType("application/pdf");

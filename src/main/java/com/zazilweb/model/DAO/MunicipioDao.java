@@ -3,7 +3,7 @@ package com.zazilweb.model.DAO;
 import com.zazilweb.model.Estado;
 import com.zazilweb.model.Municipio;
 import com.zazilweb.model.Pais;
-import com.zazilweb.utils.MysqlConector;
+import com.zazilweb.utils.DatabaseConnectionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,9 +17,10 @@ public class MunicipioDao {
     private Connection con;
     private List<Municipio> lista;
     private boolean resp;
+    private ResultSet res;
 
     public MunicipioDao(){
-        this.con = new MysqlConector().connect();
+        this.con = new DatabaseConnectionManager().connect();
         this.lista = new ArrayList<>();
         this.resp = false;
     }
@@ -32,7 +33,7 @@ public class MunicipioDao {
                             "select * from municipios where estado = ?"
                     );
             stmt.setInt(1,id);
-            ResultSet res = stmt.executeQuery();
+            res = stmt.executeQuery();
             while(res.next()){
                 Municipio m = new Municipio();
                 m.setId(res.getInt("id"));
@@ -48,10 +49,10 @@ public class MunicipioDao {
 
                 lista.add(m);
             }
-            stmt.close();
-            con.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            DatabaseConnectionManager.cerrarTodo(res,con);
         }
         return lista;
     }

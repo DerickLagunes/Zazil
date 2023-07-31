@@ -1,7 +1,7 @@
 package com.zazilweb.model.DAO;
 
 import com.zazilweb.model.*;
-import com.zazilweb.utils.MysqlConector;
+import com.zazilweb.utils.DatabaseConnectionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,59 +10,39 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaisDao implements DaoRepository{
+public class PaisDao{
 
     private Connection con;
     private List<Pais> lista;
-    private Pais p;
     private boolean resp;
+    private ResultSet res;
 
     public PaisDao(){
-        this.con = new MysqlConector().connect();
+        this.con = new DatabaseConnectionManager().connect();
         this.lista = new ArrayList<>();
-        this.p = new Pais();
         this.resp = false;
     }
 
-    @Override
     public List findAll() {
         try {
             PreparedStatement stmt =
                     con.prepareStatement(
                             "select * from paises"
                     );
-            ResultSet res = stmt.executeQuery();
+            res = stmt.executeQuery();
             while(res.next()){
+                Pais p = new Pais();
                 p.setId(res.getInt(1));
                 p.setNombre(res.getString(2));
 
                 lista.add(p);
             }
-            stmt.close();
-            con.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            DatabaseConnectionManager.cerrarTodo(res,con);
         }
         return lista;
     }
 
-    @Override
-    public Object findOne(int id) {
-        return null;
-    }
-
-    @Override
-    public boolean update(int id, Object object) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(int id) {
-        return false;
-    }
-
-    @Override
-    public boolean insert(Object object) {
-        return false;
-    }
 }

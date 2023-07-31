@@ -2,7 +2,7 @@ package com.zazilweb.model.DAO;
 
 import com.zazilweb.model.Categoria;
 import com.zazilweb.model.Colonia;
-import com.zazilweb.utils.MysqlConector;
+import com.zazilweb.utils.DatabaseConnectionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,9 +15,10 @@ public class CategoriaDao {
     private Connection con;
     private List<Categoria> lista;
     private boolean resp;
+    private ResultSet res;
 
     public CategoriaDao(){
-        this.con = new MysqlConector().connect();
+        this.con = new DatabaseConnectionManager().connect();
         this.lista = new ArrayList<>();
         this.resp = false;
     }
@@ -28,17 +29,17 @@ public class CategoriaDao {
                     con.prepareStatement(
                             "select * from categoria"
                     );
-            ResultSet res = stmt.executeQuery();
+            res = stmt.executeQuery();
             while(res.next()){
                 Categoria c = new Categoria();
                 c.setId(res.getInt("id"));
                 c.setNombre(res.getString("nombre"));
                 lista.add(c);
             }
-            stmt.close();
-            con.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            DatabaseConnectionManager.cerrarTodo(res,con);
         }
         return lista;
     }
@@ -53,6 +54,8 @@ public class CategoriaDao {
             return result > 0;
         }catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            DatabaseConnectionManager.cerrarTodo(con);
         }
     }
 }

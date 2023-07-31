@@ -3,7 +3,7 @@ package com.zazilweb.model.DAO;
 import com.zazilweb.model.Colonia;
 import com.zazilweb.model.Distribuidor;
 import com.zazilweb.model.Usuario;
-import com.zazilweb.utils.MysqlConector;
+import com.zazilweb.utils.DatabaseConnectionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,9 +17,10 @@ public class DistribuidorDao implements DaoRepository{
     private Connection con;
     private List<Distribuidor> lista;
     private boolean resp;
+    private ResultSet res;
 
     public DistribuidorDao(){
-        this.con = new MysqlConector().connect();
+        this.con = new DatabaseConnectionManager().connect();
         this.lista = new ArrayList<>();
         this.resp = false;
     }
@@ -31,7 +32,7 @@ public class DistribuidorDao implements DaoRepository{
                     con.prepareStatement(
                             "select * from distribuidor"
                     );
-            ResultSet res = stmt.executeQuery();
+            res = stmt.executeQuery();
             while(res.next()){
                 Distribuidor d = new Distribuidor();
                 d.setId(res.getInt(1));
@@ -52,10 +53,10 @@ public class DistribuidorDao implements DaoRepository{
 
                 lista.add(d);
             }
-            stmt.close();
-            con.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            DatabaseConnectionManager.cerrarTodo(res,con);
         }
         return lista;
     }
@@ -95,10 +96,10 @@ public class DistribuidorDao implements DaoRepository{
             stmt.setInt(9,d.getMunicipio().getId());
             stmt.setInt(10,d.getColonia().getId());
             flag = stmt.executeUpdate() == 0 ? false:true;
-            stmt.close();
-            con.close();
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }finally {
+            DatabaseConnectionManager.cerrarTodo(con);
         }
         return flag;
     }

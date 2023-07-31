@@ -1,7 +1,7 @@
 package com.zazilweb.model.DAO;
 
 import com.zazilweb.model.*;
-import com.zazilweb.utils.MysqlConector;
+import com.zazilweb.utils.DatabaseConnectionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,9 +16,10 @@ public class ProductoDao implements DaoRepository{
     private List<Producto> listaProducto;
     private Producto p;
     private boolean resp;
+    private ResultSet res;
 
     public ProductoDao(){
-        this.con = new MysqlConector().connect();
+        this.con = new DatabaseConnectionManager().connect();
         this.listaProducto = new ArrayList<>();
         this.p = new Producto();
         this.resp = false;
@@ -37,7 +38,7 @@ public class ProductoDao implements DaoRepository{
                                 "join subcategoria as sub on p.subcategoria = sub.id " +
                                 "join categoria as cat on p.categoria = cat.id ; "
                     );
-            ResultSet res = stmt.executeQuery();
+            res = stmt.executeQuery();
             while(res.next()){
                 p.setId(res.getInt(1));
                 p.setNombre(res.getString(2));
@@ -102,10 +103,10 @@ public class ProductoDao implements DaoRepository{
 
                 listaProducto.add(p);
             }
-            stmt.close();
-            con.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            DatabaseConnectionManager.cerrarTodo(res,con);
         }
         return listaProducto;
     }
@@ -151,6 +152,8 @@ public class ProductoDao implements DaoRepository{
             return stmt.executeUpdate() > 0;
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }finally {
+            DatabaseConnectionManager.cerrarTodo(con);
         }
     }
 }

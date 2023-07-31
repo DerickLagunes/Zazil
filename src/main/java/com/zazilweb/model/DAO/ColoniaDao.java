@@ -4,7 +4,7 @@ import com.zazilweb.model.Colonia;
 import com.zazilweb.model.Estado;
 import com.zazilweb.model.Municipio;
 import com.zazilweb.model.Pais;
-import com.zazilweb.utils.MysqlConector;
+import com.zazilweb.utils.DatabaseConnectionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,9 +18,10 @@ public class ColoniaDao {
     private Connection con;
     private List<Colonia> lista;
     private boolean resp;
+    private ResultSet res;
 
     public ColoniaDao(){
-        this.con = new MysqlConector().connect();
+        this.con = new DatabaseConnectionManager().connect();
         this.lista = new ArrayList<>();
         this.resp = false;
     }
@@ -33,17 +34,17 @@ public class ColoniaDao {
                             "select * from colonias where municipio = ?"
                     );
             stmt.setInt(1,id);
-            ResultSet res = stmt.executeQuery();
+            res = stmt.executeQuery();
             while(res.next()){
                 Colonia c = new Colonia();
                 c.setId(res.getInt("id"));
                 c.setNombre(res.getString("nombre"));
                 lista.add(c);
             }
-            stmt.close();
-            con.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            DatabaseConnectionManager.cerrarTodo(res,con);
         }
         return lista;
     }
@@ -64,7 +65,7 @@ public class ColoniaDao {
                                     "where c.id = ?"
                     );
             stmt.setInt(1,id);
-            ResultSet res = stmt.executeQuery();
+            res = stmt.executeQuery();
             if(res.next()){
                 Municipio m = new Municipio();
                 Estado e = new Estado();
@@ -80,10 +81,10 @@ public class ColoniaDao {
                 c.setMunicipio(m);
 
             }
-            stmt.close();
-            con.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            DatabaseConnectionManager.cerrarTodo(res,con);
         }
         return c;
     }
