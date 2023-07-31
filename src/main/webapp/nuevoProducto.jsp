@@ -123,37 +123,56 @@
 
           <!-- Categoria -->
             <div class="mb-3 col-md-6">
-              <label for="categoria_producto" class="form-label">Categoria<i class="text-danger">*</i></label>
-              <select required id="categoria_producto" name="categoria_producto" class="form-select form-select mb-3" aria-describedby="categoria_producto_ayuda">
-                <option selected>Selecciona...</option>
-                <c:forEach items="${categorias}" var="c">
-                  <option value="${c.id}">${c.nombre}</option>
-                </c:forEach>
-              </select>
-              <div id="categoria_producto_ayuda" class="form-text">Selecciona la categoria del nuevo producto o crea una nueva.</div>
+              <label for="categoria_producto" class="form-label">Categoría<i class="text-danger">*</i></label>
+              <div class="input-group">
+                <select required id="categoria_producto" name="categoria_producto" class="form-select form-select mb-3"
+                 onchange="updateSubCategorias(this.value)">
+                  <option selected>Selecciona...</option>
+                  <c:forEach items="${categorias}" var="c">
+                    <option value="${c.id}">${c.nombre}</option>
+                  </c:forEach>
+                </select>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-outline-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#nuevaCategoriaModal"><i class="bi bi-bag-plus-fill"></i> Nueva</button>
+                </span>
+              </div>
             </div>
 
           <!-- Subcategoria -->
             <div class="mb-3 col-md-6">
-              <label for="subcategoria_producto" class="form-label">SubCategoria<i class="text-danger">*</i></label>
-              <select required id="subcategoria_producto" name="subcategoria_producto" class="form-select form-select mb-3" aria-describedby="subcategoria_producto_ayuda">
-                <option selected>Selecciona...</option>
-                <c:forEach items="${subcategorias}" var="s">
-                  <option value="${s.id}">${s.nombre}</option>
-                </c:forEach>
-              </select>
-              <div id="subcategoria_producto_ayuda" class="form-text">Selecciona la subcategoria del nuevo producto o crea una nueva.</div>
+              <label for="subcategoria_producto" class="form-label">SubCategoría<i class="text-danger">*</i></label>
+              <div class="input-group">
+                <select required id="subcategoria_producto" name="subcategoria_producto" class="form-select form-select mb-3">
+                  <option selected>Selecciona...</option>
+                  <c:forEach items="${subcategorias}" var="s">
+                    <option value="${s.id}">${s.nombre}</option>
+                  </c:forEach>
+                </select>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-outline-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#nuevaSubCategoriaModal"><i class="bi bi-bag-plus-fill"></i> Nueva</button>
+                </span>
+              </div>
             </div>
 
           </div>
 
-          <button class="text-center btn btn-primary" type="submit"><i class="bi bi-plus"></i> Registrar</button>
+          <div class="row">
+            <div class="offset-3 col-6 text-center">
+              <button class="btn btn-lg btn-primary" type="submit"><i class="bi bi-plus" onclick="this.setAttribute('disabled', true)"></i> Registrar Nuevo Producto</button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
   </div>
 </main>
 <jsp:include page="templates/newDistribuidor.jsp" />
+<jsp:include page="templates/newCategoria.jsp" />
+<jsp:include page="templates/newSubCategoria.jsp" />
 <script>
   window.addEventListener("load", (event) => {
     loadPaises();

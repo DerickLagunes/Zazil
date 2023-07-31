@@ -22,7 +22,6 @@ public class CategoriaDao {
         this.resp = false;
     }
 
-
     public List findAll() {
         try {
             PreparedStatement stmt =
@@ -42,5 +41,18 @@ public class CategoriaDao {
             throw new RuntimeException(e);
         }
         return lista;
+    }
+
+    public boolean insert(Categoria c){
+        try{
+            PreparedStatement stmt = con.prepareStatement(
+                    "insert into categoria(nombre) values(?)"
+            );
+            stmt.setString(1,c.getNombre());
+            int result = stmt.executeUpdate();
+            return result > 0;
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

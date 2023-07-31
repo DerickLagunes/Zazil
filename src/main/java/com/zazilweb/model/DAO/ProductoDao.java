@@ -127,6 +127,30 @@ public class ProductoDao implements DaoRepository{
 
     @Override
     public boolean insert(Object object) {
-        return false;
-    }//WIP
+        try{
+            Producto p = (Producto) object;
+            PreparedStatement stmt = con.prepareStatement(
+                    "insert into producto (nombre, imagen, lote, caducidad, precio_costo, precio_venta, marca," +
+                            " distribuidor, modelo, tipo_contenido, contenido, subcategoria, categoria) " +
+                            "values (?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            );
+            stmt.setString(1,p.getNombre());
+            stmt.setString(2,p.getImagen());
+            stmt.setString(3,p.getLote());
+            stmt.setDate(4,p.getCaducidad());
+            stmt.setDouble(5,p.getPrecio_costo());
+            stmt.setDouble(6,p.getPrecio_venta());
+            stmt.setString(7,p.getMarca());
+            stmt.setInt(8,p.getDistribuidor().getId());
+            stmt.setString(9,p.getModelo());
+            stmt.setString(10,p.getTipo_contenido());
+            stmt.setString(11,p.getContenido());
+            stmt.setInt(12,p.getSubCategoria().getId());
+            stmt.setInt(13,p.getSubCategoria().getCategoria().getId());
+
+            return stmt.executeUpdate() > 0;
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
 }

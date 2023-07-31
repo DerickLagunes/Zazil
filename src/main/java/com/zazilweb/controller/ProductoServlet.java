@@ -47,11 +47,11 @@ public class ProductoServlet extends HttpServlet {
 
             //enviar Categorias y Subcategorias
             CategoriaDao catDao = new CategoriaDao();
-            List<Distribuidor> catLista = catDao.findAll();
+            List<Categoria> catLista = catDao.findAll();
             req.getSession().setAttribute("categorias",catLista);
 
             SubCategoriaDao subCatDao = new SubCategoriaDao();
-            List<Distribuidor> subcatLista = subCatDao.findAll();
+            List<SubCategoria> subcatLista = subCatDao.findAll();
             req.getSession().setAttribute("subcategorias",subcatLista);
 
         } else if (req.getParameter("operacion").equals("reporte")) {
@@ -164,7 +164,7 @@ public class ProductoServlet extends HttpServlet {
         //Registrar estos datos en la BD
         ProductoDao dao = new ProductoDao();
         if(dao.insert(p)){
-            mensaje = "El producto fue registrado exitosamente en la base de datos"
+            mensaje = "El producto fue registrado exitosamente en la base de datos";
         }
 
         req.getSession().setAttribute("mensaje",mensaje);

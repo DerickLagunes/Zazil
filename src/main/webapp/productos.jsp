@@ -44,8 +44,8 @@
                         <th>Distribuidor</th>
                         <th>Costo</th>
                         <th>Venta</th>
-                        <th>Categoria</th>
-                        <th>SubCategoria</th>
+                        <th>Categoría</th>
+                        <th>SubCategoría</th>
                     </thead>
                     <tbody>
                         <c:forEach items="${productos}" var="p">
