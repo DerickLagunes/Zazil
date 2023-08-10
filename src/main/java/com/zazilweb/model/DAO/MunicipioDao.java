@@ -3,6 +3,7 @@ package com.zazilweb.model.DAO;
 import com.zazilweb.model.Estado;
 import com.zazilweb.model.Municipio;
 import com.zazilweb.model.Pais;
+import com.zazilweb.model.SubCategoria;
 import com.zazilweb.utils.DatabaseConnectionManager;
 
 import java.sql.Connection;
@@ -14,45 +15,32 @@ import java.util.List;
 
 public class MunicipioDao {
 
-    private Connection con;
-    private List<Municipio> lista;
-    private boolean resp;
-    private ResultSet res;
-
-    public MunicipioDao(){
-        this.con = new DatabaseConnectionManager().connect();
-        this.lista = new ArrayList<>();
-        this.resp = false;
-    }
-
-
     public List findAll(int id) {
-        try {
-            PreparedStatement stmt =
-                    con.prepareStatement(
-                            "select * from municipios where estado = ?"
-                    );
-            stmt.setInt(1,id);
-            res = stmt.executeQuery();
-            while(res.next()){
-                Municipio m = new Municipio();
-                m.setId(res.getInt("id"));
-                m.setNombre(res.getString("nombre"));
+        List<Municipio> lista = new ArrayList<>();
+        String query = "select * from municipios where estado = ?";
+        try(Connection con = DatabaseConnectionManager.getConnection()) {
+            try (PreparedStatement stmt = con.prepareStatement(query)) {
+                stmt.setInt(1,id);
+                try (ResultSet res = stmt.executeQuery()) {
+                    while(res.next()){
+                        Municipio m = new Municipio();
+                        m.setId(res.getInt("id"));
+                        m.setNombre(res.getString("nombre"));
 
-                Estado estado = new Estado();
-                estado.setId(res.getInt("estado"));
+                        Estado estado = new Estado();
+                        estado.setId(res.getInt("estado"));
 
-                Pais pais = new Pais();
-                pais.setId(1);
-                pais.setNombre("México");
-                estado.setPais(pais);
+                        Pais pais = new Pais();
+                        pais.setId(1);
+                        pais.setNombre("México");
+                        estado.setPais(pais);
 
-                lista.add(m);
+                        lista.add(m);
+                    }
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            DatabaseConnectionManager.cerrarTodo(res,con);
         }
         return lista;
     }

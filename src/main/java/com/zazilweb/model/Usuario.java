@@ -16,6 +16,7 @@ public class Usuario implements Serializable {
     private String codigo;
     private Rol rol;
     private Date ultimo_login;
+    private boolean status;
 
     public Usuario() {
     }
@@ -114,5 +115,13 @@ public class Usuario implements Serializable {
 
     public void setUltimo_login(Date ultimo_login) {
         this.ultimo_login = ultimo_login;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

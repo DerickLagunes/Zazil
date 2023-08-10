@@ -14,6 +14,7 @@ public class Distribuidor implements Serializable {
     private Estado estado;
     private Municipio municipio;
     private Colonia colonia;
+    private boolean status;
 
     public Distribuidor() {
     }
@@ -108,5 +109,13 @@ public class Distribuidor implements Serializable {
 
     public void setColonia(Colonia colonia) {
         this.colonia = colonia;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

@@ -23,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +73,12 @@ public class ProductoServlet extends HttpServlet {
             mapa.put("Logo", archivo);
 
             //obtener una coneccion a los datos
-            Connection con = new DatabaseConnectionManager().connect();
+            Connection con = null;
+            try {
+                con = DatabaseConnectionManager.getConnection();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
             //Establecer el tipo de respuesta
             resp.setContentType("application/pdf");
@@ -109,7 +115,7 @@ public class ProductoServlet extends HttpServlet {
 
         //Registrar el producto en la base de datos
 
-        String UPLOAD_DIRECTORY = "/assets/img"; // Cambiar dependiendo del directorio donde quieras guardar archivos de imagen
+        String UPLOAD_DIRECTORY = req.getServletContext().getRealPath("/") + "assets/img"; // Cambiar dependiendo del directorio donde quieras guardar archivos de imagen
 
         //Obtener todos los datos del formulario
         String nombre_producto = req.getParameter("nombre_producto");
@@ -169,7 +175,7 @@ public class ProductoServlet extends HttpServlet {
 
         req.getSession().setAttribute("mensaje",mensaje);
         // Recargar la pagina de la tabla de productos
-        resp.sendRedirect("Productos");
+        resp.sendRedirect("Productos?operacion=lista");
     }
 
     private String getSubmittedFileName(Part part) {

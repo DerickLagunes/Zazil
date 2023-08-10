@@ -18,6 +18,7 @@ public class Producto implements Serializable {
     private String contenido;
     private Categoria categoria;
     private SubCategoria subCategoria;
+    private boolean status;
 
     public Producto() {
     }
@@ -132,5 +133,13 @@ public class Producto implements Serializable {
 
     public void setSubCategoria(SubCategoria subCategoria) {
         this.subCategoria = subCategoria;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

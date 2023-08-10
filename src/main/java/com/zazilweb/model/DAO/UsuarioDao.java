@@ -13,7 +13,7 @@ import java.util.List;
 
 public class UsuarioDao{
 
-    public List findAll() {
+    public List<Usuario> findAll() {
         List<Usuario> listaUsuario = new ArrayList<>();
         String query = "select * from usuario";
         try(Connection con = DatabaseConnectionManager.getConnection()){

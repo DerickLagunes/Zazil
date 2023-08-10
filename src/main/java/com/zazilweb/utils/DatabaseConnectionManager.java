@@ -15,6 +15,11 @@ public class DatabaseConnectionManager {
     private static final HikariDataSource dataSource;
 
     static {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Error loading MySQL JDBC driver", e);
+        }
         config.setJdbcUrl(JDBC_URL);
         config.setUsername(USERNAME);
         config.setPassword(PASSWORD);

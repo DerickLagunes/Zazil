@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Categoria implements Serializable {
     private int id;
     private String nombre;
+    private boolean status;
 
     public Categoria(){}
 
@@ -26,5 +27,13 @@ public class Categoria implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

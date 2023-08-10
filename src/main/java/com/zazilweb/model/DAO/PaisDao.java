@@ -12,35 +12,22 @@ import java.util.List;
 
 public class PaisDao{
 
-    private Connection con;
-    private List<Pais> lista;
-    private boolean resp;
-    private ResultSet res;
-
-    public PaisDao(){
-        this.con = new DatabaseConnectionManager().connect();
-        this.lista = new ArrayList<>();
-        this.resp = false;
-    }
-
-    public List findAll() {
-        try {
-            PreparedStatement stmt =
-                    con.prepareStatement(
-                            "select * from paises"
-                    );
-            res = stmt.executeQuery();
-            while(res.next()){
-                Pais p = new Pais();
-                p.setId(res.getInt(1));
-                p.setNombre(res.getString(2));
-
-                lista.add(p);
+    public List<Pais> findAll() {
+        List<Pais> lista = new ArrayList<>();
+        String query = "select * from paises";
+        try(Connection con = DatabaseConnectionManager.getConnection()) {
+            try (PreparedStatement stmt = con.prepareStatement(query)) {
+                try (ResultSet res = stmt.executeQuery()) {
+                    while(res.next()){
+                        Pais p = new Pais();
+                        p.setId(res.getInt(1));
+                        p.setNombre(res.getString(2));
+                        lista.add(p);
+                    }
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
-            DatabaseConnectionManager.cerrarTodo(res,con);
         }
         return lista;
     }

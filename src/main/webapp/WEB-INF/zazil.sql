@@ -197,9 +197,6 @@ values("Derick", "", "Lagunes", "Alva", 1, '1970-07-25',
        "deeckcorp@gmail.com", sha2("admin",224),
        sha2("admin",224), 1, CURDATE());
 
-select usuario.*, roles.nombre_rol from usuario join roles on usuario.rol = roles.id;
-
-select * from distribuidor;
 insert into distribuidor(
 	nombre_distribuidor,
     nombre_contacto,
@@ -218,11 +215,9 @@ insert into producto(
 ("p1", "img", "lote", CURDATE(), 10, 10.10, "marca",
 1,"model","tipo","2ml", 1, 1);
 
-select * from producto as p 
-join distribuidor as d on p.distribuidor = d.id 
-join paises as pa on d.pais = pa.id 
-join estados as es on d.estado = es.id 
-join municipios as mu on d.municipio = mu.id 
-join colonias as col on d.colonia = col.id 
-join subcategoria as sub on p.subcategoria = sub.id 
-join categoria as cat on p.categoria = cat.id ; 
+Alter Table producto ADD status BOOL;
+Alter Table categoria ADD status BOOL;
+Alter Table subcategoria ADD status BOOL;
+Alter Table distribuidor ADD status BOOL;
+Alter Table pedido ADD status BOOL;
+Alter Table usuario ADD status BOOL;

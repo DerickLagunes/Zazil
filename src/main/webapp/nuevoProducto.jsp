@@ -8,7 +8,7 @@
         <h2 class="text-center">Administración de productos</h2>
         <h3 class="text-center">Nuevo producto</h3>
         <br>
-        <form method="post" action="Productos">
+        <form method="post" action="Productos" enctype="multipart/form-data">
 
           <div class="row">
 

@@ -7,6 +7,7 @@ public class SubCategoria implements Serializable {
     private int id;
     private String nombre;
     private Categoria categoria;
+    private boolean status;
 
     public SubCategoria(){}
 
@@ -36,5 +37,13 @@ public class SubCategoria implements Serializable {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

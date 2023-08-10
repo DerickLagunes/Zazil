@@ -15,76 +15,60 @@ import java.util.List;
 
 public class ColoniaDao {
 
-    private Connection con;
-    private List<Colonia> lista;
-    private boolean resp;
-    private ResultSet res;
-
-    public ColoniaDao(){
-        this.con = new DatabaseConnectionManager().connect();
-        this.lista = new ArrayList<>();
-        this.resp = false;
-    }
-
-
-    public List findAll(int id) {
-        try {
-            PreparedStatement stmt =
-                    con.prepareStatement(
-                            "select * from colonias where municipio = ?"
-                    );
-            stmt.setInt(1,id);
-            res = stmt.executeQuery();
-            while(res.next()){
-                Colonia c = new Colonia();
-                c.setId(res.getInt("id"));
-                c.setNombre(res.getString("nombre"));
-                lista.add(c);
+    public List<Colonia> findAll(int id) {
+        List<Colonia> lista = new ArrayList<>();
+        String query = "select * from colonias where municipio = ?";
+        try(Connection con = DatabaseConnectionManager.getConnection()) {
+            try (PreparedStatement stmt = con.prepareStatement(query)) {
+                stmt.setInt(1, id);
+                try (ResultSet res = stmt.executeQuery()) {
+                    while (res.next()) {
+                        Colonia c = new Colonia();
+                        c.setId(res.getInt("id"));
+                        c.setNombre(res.getString("nombre"));
+                        lista.add(c);
+                    }
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
-            DatabaseConnectionManager.cerrarTodo(res,con);
         }
         return lista;
     }
 
     public Colonia findOne(int id) {
         Colonia c = new Colonia();
-        try {
-            PreparedStatement stmt =
-                    con.prepareStatement(
-                            "select c.id, m.id, e.id, p.id " +
-                                    "from colonias as c " +
-                                    "join municipios as m " +
-                                    "on c.municipio = m.id " +
-                                    "join estados as e " +
-                                    "on m.estado = e.id " +
-                                    "join paises as p " +
-                                    "on e.pais = p.id " +
-                                    "where c.id = ?"
-                    );
-            stmt.setInt(1,id);
-            res = stmt.executeQuery();
-            if(res.next()){
-                Municipio m = new Municipio();
-                Estado e = new Estado();
-                Pais p = new Pais();
+        String query = "select c.id, m.id, e.id, p.id " +
+                "from colonias as c " +
+                "join municipios as m " +
+                "on c.municipio = m.id " +
+                "join estados as e " +
+                "on m.estado = e.id " +
+                "join paises as p " +
+                "on e.pais = p.id " +
+                "where c.id = ?";
+        try(Connection con = DatabaseConnectionManager.getConnection()) {
+            try (PreparedStatement stmt = con.prepareStatement(query)) {
+                stmt.setInt(1, id);
+                try (ResultSet res = stmt.executeQuery()) {
+                    if (res.next()) {
+                        Municipio m = new Municipio();
+                        Estado e = new Estado();
+                        Pais p = new Pais();
 
-                c.setId(res.getInt(1));
-                m.setId(res.getInt(2));
-                e.setId(res.getInt(3));
-                p.setId(res.getInt(4));
+                        c.setId(res.getInt(1));
+                        m.setId(res.getInt(2));
+                        e.setId(res.getInt(3));
+                        p.setId(res.getInt(4));
 
-                e.setPais(p);
-                m.setEstado(e);
-                c.setMunicipio(m);
-
+                        e.setPais(p);
+                        m.setEstado(e);
+                        c.setMunicipio(m);
+                    }
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
-            DatabaseConnectionManager.cerrarTodo(res,con);
         }
         return c;
     }
