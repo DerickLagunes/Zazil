@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@WebServlet(name = "ProductoServlet", value = "/Productos")
+@WebServlet(urlPatterns = {"/Productos"})
 @MultipartConfig
 public class ProductoServlet extends HttpServlet {
 

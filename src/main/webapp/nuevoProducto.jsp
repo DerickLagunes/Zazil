@@ -144,7 +144,7 @@
             <div class="mb-3 col-md-6">
               <label for="subcategoria_producto" class="form-label">SubCategoría<i class="text-danger">*</i></label>
               <div class="input-group">
-                <select required id="subcategoria_producto" name="subcategoria_producto" class="form-select form-select mb-3">
+                <select disabled required id="subcategoria_producto" name="subcategoria_producto" class="form-select form-select mb-3">
                   <option selected>Selecciona...</option>
                   <c:forEach items="${subcategorias}" var="s">
                     <option value="${s.id}">${s.nombre}</option>

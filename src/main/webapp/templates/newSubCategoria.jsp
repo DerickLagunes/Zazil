@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Vertically centered scrollable modal -->
 <div class="modal fade" id="nuevaSubCategoriaModal"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -33,8 +34,8 @@
                                 <div class="input-group">
                                     <select required id="subcat_categoria" name="subcat_categoria" class="form-select form-select mb-3">
                                         <option selected>Selecciona...</option>
-                                        <c:forEach items="${categorias}" var="s">
-                                            <option value="${s.id}">${s.nombre}</option>
+                                        <c:forEach items="${categorias}" var="c">
+                                            <option value="${c.id}">${c.nombre}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -66,18 +67,19 @@
     function enviarSubCat(){
         let form = document.querySelector("#subcat");
 
-        var req = new XMLHttpRequest();
+        let req = new XMLHttpRequest();
         req.open ("POST", "SubCategoria", true);
         req.onload = function(){
-            if (req.readyState == 4 && req.status == 200){
-                alert (req.responseText);
-                let myModalEl = document.getElementById('nuevaSubCategoriaModal');
-                let modal = bootstrap.Modal.getInstance(myModalEl)
-                modal.hide();
-                updateSubCategorias();
-            }
-            else{
-                alert ("Failed!");
+            if (req.readyState == 4){
+                if(req.status == 200){
+                    let myModalEl = document.getElementById('nuevaSubCategoriaModal');
+                    let modal = bootstrap.Modal.getInstance(myModalEl)
+                    modal.hide();
+                    updateSubCategorias(req.responseText);
+                }
+                else{
+                    alert ("Failed!");
+                }
             }
         };
         req.send (new FormData(form));
@@ -102,14 +104,14 @@
                             option.text = respuesta[key].nombre;
 
                             select.appendChild(option);
+                            select.removeAttribute("disabled");
                         }
                     }
-                }
-                else if (req.status == 400) {
-                    alert('There was an error 400');
-                }
-                else {
-                    alert('something else other than 200 was returned');
+                } else {
+                    console.log('Error on updating Categories');
+                    console.log(req.status);
+                    console.log(req.readyState );
+                    console.log(req.responseText);
                 }
             }
         };

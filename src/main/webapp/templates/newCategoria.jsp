@@ -76,20 +76,29 @@
         limpiarSelect("subcat_categoria");
         req.open("GET", "Categoria", true);
         req.onreadystatechange = function() {
-            if (req.readyState == XMLHttpRequest.DONE && req.status == 200) {
-                let respuesta = JSON.parse(req.responseText); //json
-                for (let key in respuesta) {
-                    if (respuesta.hasOwnProperty(key)) {
-                        //Crear elementos del select
-                        let option = document.createElement("option");
-                        option.setAttribute("value", respuesta[key].id);
-                        option.text = respuesta[key].nombre;
-                        select.appendChild(option);
-                        select2.appendChild(option)
+            if (req.readyState === XMLHttpRequest.DONE) {
+                if (req.status == 200) {
+                    let respuesta = JSON.parse(req.responseText); //json
+                    for (let key in respuesta) {
+                        if (respuesta.hasOwnProperty(key)) {
+                            //Crear elementos del select
+                            let option = document.createElement("option");
+                            option.setAttribute("value", respuesta[key].id);
+                            option.text = respuesta[key].nombre;
+                            select.appendChild(option);
+                            // Crear una nueva opción para el segundo select
+                            let option2 = document.createElement("option");
+                            option2.setAttribute("value", respuesta[key].id);
+                            option2.text = respuesta[key].nombre;
+                            select2.appendChild(option2);
+                        }
                     }
+                } else {
+                    console.log('Error on updating Categories');
+                    console.log(req.status);
+                    console.log(req.readyState );
+                    console.log(req.responseText);
                 }
-            } else {
-                console.log('Error on updating Categories');
             }
         };
         req.send(null);

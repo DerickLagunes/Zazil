@@ -22,7 +22,7 @@ public class SubCategoriaServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //enviar Categorias y Subcategorias
         SubCategoriaDao subCatDao = new SubCategoriaDao();
-        List<SubCategoria> subcatLista = (List<SubCategoria>) subCatDao.findAll(Integer.parseInt(req.getParameter("catid")));
+        List<SubCategoria> subcatLista = subCatDao.findAll(Integer.parseInt(req.getParameter("catid")));
 
         Gson gson = new Gson();
         String respuesta = gson.toJson(subcatLista);
@@ -37,12 +37,20 @@ public class SubCategoriaServlet extends HttpServlet {
         SubCategoria s = new SubCategoria();
 
         s.setNombre(req.getParameter("nombre_subcategoria"));
-        s.setCategoria(new Categoria(Integer.parseInt(req.getParameter("subcat_categoria"))));
+        s.setCategoria(
+                new Categoria(
+                        Integer.parseInt(
+                                req.getParameter("subcat_categoria")
+                        )
+                )
+        );
+        System.out.println("--------------------------------");
+        System.out.println(s.getCategoria().getId());
 
         SubCategoriaDao dao = new SubCategoriaDao();
         dao.insert(s);
 
         resp.setContentType("text/plain");
-        resp.getWriter().write("");
+        resp.getWriter().write(s.getCategoria().getId()+"");
     }
 }

@@ -20,7 +20,7 @@ public class CategoriaServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //enviar Categorias y Subcategorias
         CategoriaDao catDao = new CategoriaDao();
-        List<Categoria> catLista = (List<Categoria>) catDao.findAll();
+        List<Categoria> catLista = catDao.findAll();
 
         Gson gson = new Gson();
         String respuesta = gson.toJson(catLista);
